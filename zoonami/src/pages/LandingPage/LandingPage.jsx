@@ -6,6 +6,7 @@ import Navigation from "../../components/Navbar/Navbar"
 import Footer from '../../components/Footer/Footer'
 import Facilities from '../../components/Fasilitas/Fasilitas'
 import Ticket from '../../components/Tiket/Tiket'
+import ZooAnimals from '../../components/TopAnimals/TopAnimals'
 
 const LandingPage = () => {
     return (
@@ -13,6 +14,7 @@ const LandingPage = () => {
             <Navigation />
             <HeroImage />
             <About />
+            <ZooAnimals />
             <Facilities />
             <Ticket />
             <Footer />
