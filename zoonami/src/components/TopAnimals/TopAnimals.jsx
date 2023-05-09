@@ -1,4 +1,5 @@
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function ZooAnimals() {
     const animalsList = [
@@ -42,7 +43,7 @@ function ZooAnimals() {
                 })}
             </Row>
             <div className="d-flex justify-content-center">
-                <Button variant="outline-success" className="mt-3">Lihat Lainnya</Button>
+                <Link to="/animals" className="btn btn-outline-success mt-3">Lihat Lainnya</Link>
             </div>
         </Container>
     );
