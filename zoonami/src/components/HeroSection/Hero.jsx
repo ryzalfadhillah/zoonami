@@ -14,7 +14,7 @@ export default function HeroImage() {
                 <div className='text-white'>
                 <h1 className='mb-3 text-success'>Zoonami</h1>
                 <h5 className='mb-3'>Kebun binatang masa kini</h5>
-                <Link className='btn btn-outline-light btn-lg' to='/animals' role='button'>
+                <Link className='btn btn-outline-success btn-lg' to='/animals' role='button'>
                     Lihat binatang
                 </Link>
                 </div>
