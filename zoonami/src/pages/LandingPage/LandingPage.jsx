@@ -15,8 +15,8 @@ const LandingPage = () => {
             <HeroImage />
             <About />
             <ZooAnimals />
-            <Facilities />
             <Ticket />
+            <Facilities />
             <Footer />
         </div>
     )

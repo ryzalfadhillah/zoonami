@@ -15,7 +15,7 @@ function Ticket() {
                             <Card.Text>
                                 <strong>Harga:</strong> Rp 25.000/orang
                             </Card.Text>
-                            <Button type="button" class="btn btn-outline-success">Beli Tiket</Button>
+                            <Button variant="outline-success" className="mt-3">Beli Tiket</Button>
                         </Card.Body>
                     </Card>
                 </Col>
@@ -29,7 +29,7 @@ function Ticket() {
                             <Card.Text>
                                 <strong>Harga:</strong> Rp 20.000/orang
                             </Card.Text>
-                            <Button type="button" class="btn btn-outline-success">Beli Tiket</Button>
+                            <Button variant="outline-success" className="mt-3">Beli Tiket</Button>
                         </Card.Body>
                     </Card>
                 </Col>

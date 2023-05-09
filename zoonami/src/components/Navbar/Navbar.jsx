@@ -4,7 +4,7 @@ import logo from '../../assets/images/logo.png';
 
 function Navigation() {
     return (
-        <Navbar expand="lg" style={{ backgroundColor: '#3C6255' }}>
+        <Navbar expand="lg" fixed='top' style={{ backgroundColor: '#3C6255' }}>
         <Container>
             <Navbar.Brand className="mr-auto">
             <Link to="/">
