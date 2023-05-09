@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 function About() {
     return (
-        <Container className="about text-white">
+        <Container className="about my-4 text-secondary-emphasis">
             <Row>
                 <Col md={6}>
                     <div className="about-text rounded-3 d-flex flex-column justify-content-center align-items-center" style={{ backgroundColor: '#A6BB8D', height: '100%' }}>

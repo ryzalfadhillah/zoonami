@@ -11,9 +11,7 @@ const LandingPage = () => {
         <div style={{ backgroundColor: '#61876E' }}>
             <Navigation />
             <HeroImage />
-            <div className="my-4">
                 <About />
-            </div>
             <Facilities />
             <Footer />
         </div>
