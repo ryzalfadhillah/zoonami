@@ -4,6 +4,7 @@ import About from "../../components/AboutUs/aboutUs"
 import HeroImage from "../../components/HeroSection/Hero"
 import Navigation from "../../components/Navbar/Navbar"
 import Footer from '../../components/Footer/Footer'
+import Facilities from '../../components/Fasilitas/Fasilitas'
 
 const LandingPage = () => {
     return (
@@ -13,6 +14,7 @@ const LandingPage = () => {
             <div className="my-4">
                 <About />
             </div>
+            <Facilities />
             <Footer />
         </div>
     )
