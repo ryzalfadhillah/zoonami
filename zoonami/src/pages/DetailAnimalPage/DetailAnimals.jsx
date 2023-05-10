@@ -34,7 +34,7 @@ const DetailAnimals = () => {
                 >
                     <h2 className='text-success'>
                         <FaPaw className='me-2' />
-                        {animal.name}
+                        {animal?.name}
                     </h2>
                     {loading && (
                         <div className='text-center my-5'>
@@ -50,7 +50,7 @@ const DetailAnimals = () => {
                             Error loading data. Please try again later.
                         </div>
                     )}
-                    {!loading && error === undefined && (
+                    {!loading && error === undefined && animal && (
                         <Row className='mt-3 d-flex align-items-center'>
                             <Col md={4}>
                                 <Image
@@ -87,6 +87,11 @@ const DetailAnimals = () => {
                             </Col>
                         </Row>
                     )}
+                    {
+                        !animal && (
+                            <p className="text-succes mt-3">Parameter ID tidak valid</p>
+                        )
+                    }
                 </Container>
                 <Footer />
             </div>
