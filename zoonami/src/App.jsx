@@ -4,6 +4,10 @@ import LandingPage from './pages/LandingPage/landingPage'
 import AnimalsPage from './pages/AnimalsPage/AnimalsPage'
 import NotFoundPage from './pages/NotFound/NotFound'
 import DetailAnimals from './pages/DetailAnimalPage/DetailAnimals'
+import DashboardLayout from './layout/DashboardLayout'
+import Welcome from './pages/Welcome/Welcome'
+import ManagementAnimals from './pages/ManagementAnimals/ManagementAnimals'
+import FormAnimals from './pages/FormAnimals/FormAnimals'
 
 function App() {
   return (
@@ -26,12 +30,27 @@ function App() {
         />
         <Route 
           path='/dashboard'
+          element={
+            <DashboardLayout>
+              <Welcome />
+            </DashboardLayout>
+          }
         />
         <Route 
           path='/dashboard/animals'
+          element={
+            <DashboardLayout>
+              <ManagementAnimals />
+            </DashboardLayout>
+          }
         />
         <Route 
           path='/dashboard/animals-form'
+          element={
+            <DashboardLayout>
+              <FormAnimals />
+            </DashboardLayout>
+          }
         />
         <Route 
             path='*'

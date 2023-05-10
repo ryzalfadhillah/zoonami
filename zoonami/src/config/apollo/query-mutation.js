@@ -29,3 +29,19 @@ export const GET_ANIMALS = gql`
         }
     }
 `
+
+export const ADD_ANIMALS = gql`
+    mutation MyMutation($object: animals_insert_input!) {
+        insert_animals_one(object: $object) {
+        id
+        }
+    }
+`
+
+export const DELETE_ANIMALS = gql`
+    mutation MyMutation($id: String!) {
+        delete_animals_by_pk(id: $id) {
+        id
+        }
+    }
+`
