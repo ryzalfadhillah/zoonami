@@ -3,9 +3,10 @@ import { Table, Button, Form, FormControl } from 'react-bootstrap';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 import { DELETE_ANIMALS, GET_ALL_ANIMALS } from '../../config/apollo/query-mutation';
 import { useMutation, useQuery } from '@apollo/client';
+import { useNavigate } from 'react-router';
 
 const ManagementAnimals = () => {
-    
+    const navigate = useNavigate()
     const {data, loading, error} = useQuery(GET_ALL_ANIMALS)
     const [animalsList, setAnimalsList] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -36,6 +37,10 @@ const ManagementAnimals = () => {
             deleteAnimals({variables: {id: id}})
         }
     };
+
+    const handleEdit = (id) => {
+        navigate(`/dashboard/animals-form/${id}`)
+    }
 
     return (
         <>
@@ -75,12 +80,12 @@ const ManagementAnimals = () => {
                             <td>{animal.lokasi_kandang}</td>
                             <td>{animal.jumlah}</td>
                             <td>{animal.habitat}</td>
-                            <td>{`${animal.deskripsi.split(' ').slice(0,5).join('.')}...`}</td>
+                            <td>{`${animal.deskripsi.split(' ').slice(0,5).join(' ')}...`}</td>
                             <td>
                                 <img src={animal.image} alt={animal.name} width="50" height="50" />
                             </td>
                             <td>
-                                <Button variant="success" className="me-2">
+                                <Button variant="success" className="me-2" onClick={() => handleEdit(animal.id)}>
                                     <FaEdit />
                                 </Button>
                                 <Button variant="danger" onClick={() => handleDeleteAnimal(animal.id)}>

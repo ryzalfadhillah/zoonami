@@ -38,6 +38,15 @@ export const ADD_ANIMALS = gql`
     }
 `
 
+export const EDIT_ANIMALS = gql`
+    mutation MyMutation($id: String!, $set: animals_set_input!) {
+        update_animals_by_pk(pk_columns: {id: $id}, _set: $set) {
+        id
+        }
+    }
+`
+
+
 export const DELETE_ANIMALS = gql`
     mutation MyMutation($id: String!) {
         delete_animals_by_pk(id: $id) {

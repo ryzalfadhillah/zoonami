@@ -1,13 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { ADD_ANIMALS, GET_ALL_ANIMALS } from '../../config/apollo/query-mutation';
-import { useMutation } from '@apollo/client';
+import { ADD_ANIMALS, EDIT_ANIMALS, GET_ALL_ANIMALS, GET_ANIMALS } from '../../config/apollo/query-mutation';
+import { useMutation, useQuery } from '@apollo/client';
 import { storage } from '../../config/firebase/firebaseConfig'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid'
 
 const FormAnimals = () => {
+
+    const { idEdit } = useParams();
+    const { data: dataParams, loadnig: loadingParams, error: errorParams } = useQuery(GET_ANIMALS, {
+        variables: { id: { _eq: idEdit } },
+    })
+
     const [animalData, setAnimalData] = useState({
         id: uuidv4(),
         name: '',
@@ -26,6 +32,13 @@ const FormAnimals = () => {
             }
         ]
     });
+    const [editAnimal, {loading: loadingEdit}] = useMutation(EDIT_ANIMALS, {
+        refetchQueries: [
+            {
+                query: GET_ALL_ANIMALS
+            }
+        ]
+    })
     const [uploadingImg, setUploadingImg] = useState(0)
 
     const handleInputChange = (event) => {
@@ -37,6 +50,22 @@ const FormAnimals = () => {
         const { value } = event.target;
         setAnimalData({ ...animalData, lokasi_kandang: value });
     }
+
+    useEffect(() => {
+        if(idEdit && !loadingParams && !errorParams){
+            setAnimalData({
+                id: idEdit,
+                name: dataParams?.animals[0].name,
+                makanan: dataParams?.animals[0].makanan,
+                lokasi_kandang: dataParams?.animals[0].lokasi_kandang,
+                jumlah: dataParams?.animals[0].jumlah,
+                habitat: dataParams?.animals[0].habitat,
+                deskripsi: dataParams?.animals[0].deskripsi,
+                image: dataParams?.animals[0].image
+            }
+            )
+        }
+    },[idEdit, dataParams, loadingParams, errorParams])
 
     const handleImageChange = (event) => {
         let value = event.target.files[0]
@@ -72,40 +101,77 @@ const FormAnimals = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        const idParams = idEdit;
         const { id, name, makanan, lokasi_kandang, jumlah, habitat, deskripsi, image } = animalData;
-        
-        try {
-            await addAnimal({
-                variables: {
-                    object: {
-                        id,
-                        name,
-                        makanan,
-                        lokasi_kandang,
-                        jumlah: jumlah.toString(),
-                        habitat,
-                        deskripsi,
-                        image: image
+        if(!idParams){
+            try {
+                await addAnimal({
+                    variables: {
+                        object: {
+                            id: id,
+                            name,
+                            makanan,
+                            lokasi_kandang,
+                            jumlah: jumlah.toString(),
+                            habitat,
+                            deskripsi,
+                            image: image
+                        }
                     }
-                }
-            });
-            setAnimalData({
-                id: '',
-                name: '',
-                makanan: '',
-                lokasi_kandang: '',
-                jumlah: 0,
-                habitat: '',
-                deskripsi: '',
-                image: ''
-            });
-
-            alert('Binatang berhasil ditambahkan!');
-            navigate('/dashboard/animals')
-        } catch (error) {
-            console.log(error);
-            alert('Terjadi kesalahan, binatang gagal ditambahkan!');
+                });
+                setAnimalData({
+                    id: '',
+                    name: '',
+                    makanan: '',
+                    lokasi_kandang: '',
+                    jumlah: 0,
+                    habitat: '',
+                    deskripsi: '',
+                    image: ''
+                });
+    
+                alert('Binatang berhasil ditambahkan!');
+                navigate('/dashboard/animals')
+            } catch (error) {
+                console.log(error);
+                alert('Terjadi kesalahan, binatang gagal ditambahkan!');
+            }
+        }else{
+            console.log('id ' + idParams);
+            try {
+                await editAnimal({
+                    variables: {
+                        id: idParams,
+                        set: {
+                            id: idParams,
+                            name,
+                            makanan,
+                            lokasi_kandang,
+                            jumlah: jumlah.toString(),
+                            habitat,
+                            deskripsi,
+                            image: image
+                        }
+                    }
+                });
+                setAnimalData({
+                    id: '',
+                    name: '',
+                    makanan: '',
+                    lokasi_kandang: '',
+                    jumlah: 0,
+                    habitat: '',
+                    deskripsi: '',
+                    image: ''
+                });
+                alert('Binatang berhasil diedit!');
+                navigate('/dashboard/animals')
+            } catch (error) {
+                console.log(error);
+                alert('Terjadi kesalahan, binatang gagal ditambahkan!');
+            }
         }
+        
     };
 
     return (
@@ -164,7 +230,7 @@ const FormAnimals = () => {
                         <p>Uploading image : {uploadingImg}%</p>
                 }
 
-                <Button variant="success" type="submit" disabled={loading || uploadingImg != 0}>
+                <Button variant="success" type="submit" disabled={loading || loadingEdit || uploadingImg != 0}>
                     {loading ? 'Menambahkan...' : 'Tambah'}
                 </Button>
             </Form>

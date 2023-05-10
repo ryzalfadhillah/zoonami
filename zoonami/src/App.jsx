@@ -53,6 +53,14 @@ function App() {
           }
         />
         <Route 
+          path='/dashboard/animals-form/:idEdit'
+          element={
+            <DashboardLayout>
+              <FormAnimals />
+            </DashboardLayout>
+          }
+        />
+        <Route 
             path='*'
             element={<NotFoundPage />}
         />
