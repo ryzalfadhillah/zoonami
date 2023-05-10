@@ -22,7 +22,7 @@ function ZooAnimals() {
                     const description = animal.deskripsi.split(' ').slice(0, 6).join(' ') + '...';
                     return (
                         <Col key={index} xs={12} md={6} lg={3} className="my-3 text-secondary-emphasis">
-                            <Link to={`/animals/${animal.name}`} className="text-decoration-none">
+                            <Link to={`/animals/${animal.id}`} className="text-decoration-none">
                                 <div className="animal-card p-3 rounded-3 " style={{ backgroundColor: '#A6BB8D' }}>
                                 <img src={animal.image} alt={animal.name} className="img-fluid mb-3 rounded-top" style={{ height: '200px', objectFit: 'cover' }} />
                                 <h4 className="text-success">{animal.name}</h4>
