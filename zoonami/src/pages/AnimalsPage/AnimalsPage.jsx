@@ -1,73 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Row, Col, Form, FormControl, Button } from 'react-bootstrap';
 import Navigation from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
+import { GET_ALL_ANIMALS } from '../../config/apollo/query-mutation';
 
 const AnimalsPage = () => {
-    const animalsList = [
-        {
-            name: 'Harimau',
-            image: 'https://source.unsplash.com/random/?tiger',
-            description: 'Harimau adalah hewan karnivora terbesar ketiga setelah beruang kutub dan beruang coklat.'
-        },
-        {
-            name: 'Gajah',
-            image: 'https://source.unsplash.com/random/?elephant',
-            description: 'Gajah adalah hewan terbesar di darat dan memiliki kecerdasan yang sangat tinggi.'
-        },
-        {
-            name: 'Jerapah',
-            image: 'https://source.unsplash.com/random/?girafe',
-            description: 'Jerapah adalah hewan bertubuh tinggi dan memiliki leher panjang sehingga dapat mencapai daun-daun di atas pepohonan.'
-        },
-        {
-            name: 'Singa',
-            image: 'https://source.unsplash.com/random/?lion',
-            description: 'Singa adalah hewan karnivora terbesar di Afrika dan merupakan lambang kekuatan dan keganasan.'
-        },
-        {
-            name: 'Harimau',
-            image: 'https://source.unsplash.com/random/?tiger',
-            description: 'Harimau adalah hewan karnivora terbesar ketiga setelah beruang kutub dan beruang coklat.'
-        },
-        {
-            name: 'Gajah',
-            image: 'https://source.unsplash.com/random/?elephant',
-            description: 'Gajah adalah hewan terbesar di darat dan memiliki kecerdasan yang sangat tinggi.'
-        },
-        {
-            name: 'Jerapah',
-            image: 'https://source.unsplash.com/random/?girafe',
-            description: 'Jerapah adalah hewan bertubuh tinggi dan memiliki leher panjang sehingga dapat mencapai daun-daun di atas pepohonan.'
-        },
-        {
-            name: 'Singa',
-            image: 'https://source.unsplash.com/random/?lion',
-            description: 'Singa adalah hewan karnivora terbesar di Afrika dan merupakan lambang kekuatan dan keganasan.'
-        },{
-            name: 'Harimau',
-            image: 'https://source.unsplash.com/random/?tiger',
-            description: 'Harimau adalah hewan karnivora terbesar ketiga setelah beruang kutub dan beruang coklat.'
-        },
-        {
-            name: 'Gajah',
-            image: 'https://source.unsplash.com/random/?elephant',
-            description: 'Gajah adalah hewan terbesar di darat dan memiliki kecerdasan yang sangat tinggi.'
-        },
-        {
-            name: 'Jerapah',
-            image: 'https://source.unsplash.com/random/?girafe',
-            description: 'Jerapah adalah hewan bertubuh tinggi dan memiliki leher panjang sehingga dapat mencapai daun-daun di atas pepohonan.'
-        },
-        {
-            name: 'Singa',
-            image: 'https://source.unsplash.com/random/?lion',
-            description: 'Singa adalah hewan karnivora terbesar di Afrika dan merupakan lambang kekuatan dan keganasan.'
-        }
-    ];
-
+    const {data, loading, error} = useQuery(GET_ALL_ANIMALS)
     const [searchTerm, setSearchTerm] = useState('');
+    const [animalsList, setAnimalsList] = useState([]);
+
+    useEffect(() => {
+        if(!loading && error === undefined){
+            setAnimalsList(data.animals)
+        }
+    },[data, loading, error])
 
     const handleInputChange = (event) => {
         setSearchTerm(event.target.value);
@@ -98,7 +46,7 @@ const AnimalsPage = () => {
                     {
                         filteredAnimalsList.length > 0 ?
                         filteredAnimalsList.map((animal, index) => {
-                            const description = animal.description.split(' ').slice(0, 10).join(' ') + '...';
+                            const description = animal.deskripsi.split(' ').slice(0, 6).join(' ') + '...';
                             return (
                                 <Col key={index} xs={12} md={6} lg={3} className="my-3">
                                     <Link to={`/animals/${animal.name}`} className="text-decoration-none">
