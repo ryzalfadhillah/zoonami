@@ -1,36 +1,25 @@
+import { useQuery } from '@apollo/client';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { GET_ALL_ANIMALS } from '../../config/apollo/query-mutation';
+import { useEffect, useState } from 'react';
 
 function ZooAnimals() {
-    const animalsList = [
-        {
-            name: 'Harimau',
-            image: 'https://source.unsplash.com/random/?tiger',
-            description: 'Harimau adalah hewan karnivora terbesar ketiga setelah beruang kutub dan beruang coklat.'
-        },
-        {
-            name: 'Gajah',
-            image: 'https://source.unsplash.com/random/?elephant',
-            description: 'Gajah adalah hewan terbesar di darat dan memiliki kecerdasan yang sangat tinggi.'
-        },
-        {
-            name: 'Jerapah',
-            image: 'https://source.unsplash.com/random/?girafe',
-            description: 'Jerapah adalah hewan bertubuh tinggi dan memiliki leher panjang sehingga dapat mencapai daun-daun di atas pepohonan.'
-        },
-        {
-            name: 'Singa',
-            image: 'https://source.unsplash.com/random/?lion',
-            description: 'Singa adalah hewan karnivora terbesar di Afrika dan merupakan lambang kekuatan dan keganasan.'
+    const {data, loading, error} = useQuery(GET_ALL_ANIMALS)
+    const [animalsList, setAnimalsList] = useState([]);
+
+    useEffect(() => {
+        if(!loading && error === undefined){
+            setAnimalsList(data.animals)
         }
-    ];
+    },[data, loading, error])
 
     return (
         <Container className="my-5 p-3 rounded-5" style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}>
             <h2 className='text-success'>Binatang di Zoonami</h2>
             <Row>
                 {animalsList.slice(0, 4).map((animal, index) => {
-                    const description = animal.description.split(' ').slice(0, 10).join(' ') + '...';
+                    const description = animal.deskripsi.split(' ').slice(0, 6).join(' ') + '...';
                     return (
                         <Col key={index} xs={12} md={6} lg={3} className="my-3 text-secondary-emphasis">
                             <Link to={`/animals/${animal.name}`} className="text-decoration-none">
