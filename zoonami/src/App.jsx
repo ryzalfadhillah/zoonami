@@ -1,33 +1,110 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
+import LandingPage from './pages/LandingPage/landingPage'
+import AnimalsPage from './pages/AnimalsPage/AnimalsPage'
+import NotFoundPage from './pages/NotFound/NotFound'
+import DetailAnimals from './pages/DetailAnimalPage/DetailAnimals'
+import DashboardLayout from './layout/DashboardLayout'
+import Welcome from './pages/Welcome/Welcome'
+import ManagementAnimals from './pages/ManagementAnimals/ManagementAnimals'
+import FormAnimals from './pages/FormAnimals/FormAnimals'
+import LoginPage from './pages/LoginPage/LoginPage'
+import { PropTypes } from 'prop-types';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+
+  const DashboardRoute = (props) => {
+    if(!sessionStorage.getItem('accessToken')){
+        return <Navigate to={'/login'} />
+    }else if(sessionStorage.getItem('accessToken') !== undefined){
+        return props.children
+    }
+  }
+
+  const LoginRoute = (props) => {
+    if(!sessionStorage.getItem('accessToken')){
+      return props.children
+    }else if(sessionStorage.getItem('accessToken') !== undefined){
+      return <Navigate to={'/dashboard'} />
+    }
+  }
+
+  DashboardRoute.propTypes = {
+    children: PropTypes.node.isRequired,
+  };
+
+  LoginRoute.propTypes = {
+    children: PropTypes.node.isRequired,
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Routes>
+        <Route 
+          path='/'
+          element={<LandingPage />}
+        />
+        <Route 
+          path='/animals'
+          element={<AnimalsPage />}
+        />
+        <Route 
+            path='/animals/:id'
+            element={<DetailAnimals />}
+        />
+        <Route 
+          path='/login'
+          element={
+          <LoginRoute>
+            <LoginPage />
+          </LoginRoute>
+          }
+        />
+        <Route 
+          path='/dashboard'
+          element={
+            <DashboardRoute>
+              <DashboardLayout>
+                <Welcome />
+              </DashboardLayout>
+            </DashboardRoute>
+          }
+        />
+        <Route 
+          path='/dashboard/animals'
+          element={
+            <DashboardRoute>
+              <DashboardLayout>
+                <ManagementAnimals />
+              </DashboardLayout>
+            </DashboardRoute>
+          }
+        />
+        <Route 
+          path='/dashboard/animals-form'
+          element={
+            <DashboardRoute>
+              <DashboardLayout>
+                <FormAnimals />
+              </DashboardLayout>
+            </DashboardRoute>
+          }
+        />
+        <Route 
+          path='/dashboard/animals-form/:idEdit'
+          element={
+            <DashboardRoute>
+              <DashboardLayout>
+                <FormAnimals />
+              </DashboardLayout>
+            </DashboardRoute>
+          }
+        />
+        <Route 
+            path='*'
+            element={<NotFoundPage />}
+        />
+      </Routes>
     </>
   )
 }
