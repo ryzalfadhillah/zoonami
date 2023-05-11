@@ -8,6 +8,7 @@ import DashboardLayout from './layout/DashboardLayout'
 import Welcome from './pages/Welcome/Welcome'
 import ManagementAnimals from './pages/ManagementAnimals/ManagementAnimals'
 import FormAnimals from './pages/FormAnimals/FormAnimals'
+import LoginPage from './pages/LoginPage/LoginPage'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         />
         <Route 
           path='/login'
+          element={<LoginPage />}
         />
         <Route 
           path='/dashboard'
