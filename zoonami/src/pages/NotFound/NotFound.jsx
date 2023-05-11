@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 
 function NotFoundPage() {
     return (
-        <Container className="d-flex justify-content-center align-items-center my-5 text-center">
+        <Container className="d-flex vh-100 justify-content-center align-items-center my-5 text-center">
         <Row>
             <Col>
             <h1>404 - Halaman tidak ditemukan</h1>
             <p className="lead">Maaf, halaman yang Anda cari tidak ditemukan.</p>
             <Link to="/">
-                <Button variant="primary" className="mt-3">Kembali ke Beranda</Button>
+                <Button variant="success" className="mt-3">Kembali ke Beranda</Button>
             </Link>
             </Col>
         </Row>
