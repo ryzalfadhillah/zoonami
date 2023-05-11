@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import LandingPage from './pages/LandingPage/landingPage'
 import AnimalsPage from './pages/AnimalsPage/AnimalsPage'
@@ -9,8 +9,34 @@ import Welcome from './pages/Welcome/Welcome'
 import ManagementAnimals from './pages/ManagementAnimals/ManagementAnimals'
 import FormAnimals from './pages/FormAnimals/FormAnimals'
 import LoginPage from './pages/LoginPage/LoginPage'
+import { PropTypes } from 'prop-types';
 
-function App() {
+const App = () => {
+
+  const DashboardRoute = (props) => {
+    if(!sessionStorage.getItem('accessToken')){
+        return <Navigate to={'/login'} />
+    }else if(sessionStorage.getItem('accessToken') !== undefined){
+        return props.children
+    }
+  }
+
+  const LoginRoute = (props) => {
+    if(!sessionStorage.getItem('accessToken')){
+      return props.children
+    }else if(sessionStorage.getItem('accessToken') !== undefined){
+      return <Navigate to={'/dashboard'} />
+    }
+  }
+
+  DashboardRoute.propTypes = {
+    children: PropTypes.node.isRequired,
+  };
+
+  LoginRoute.propTypes = {
+    children: PropTypes.node.isRequired,
+  };
+
   return (
     <>
       <Routes>
@@ -28,38 +54,50 @@ function App() {
         />
         <Route 
           path='/login'
-          element={<LoginPage />}
+          element={
+          <LoginRoute>
+            <LoginPage />
+          </LoginRoute>
+          }
         />
         <Route 
           path='/dashboard'
           element={
-            <DashboardLayout>
-              <Welcome />
-            </DashboardLayout>
+            <DashboardRoute>
+              <DashboardLayout>
+                <Welcome />
+              </DashboardLayout>
+            </DashboardRoute>
           }
         />
         <Route 
           path='/dashboard/animals'
           element={
-            <DashboardLayout>
-              <ManagementAnimals />
-            </DashboardLayout>
+            <DashboardRoute>
+              <DashboardLayout>
+                <ManagementAnimals />
+              </DashboardLayout>
+            </DashboardRoute>
           }
         />
         <Route 
           path='/dashboard/animals-form'
           element={
-            <DashboardLayout>
-              <FormAnimals />
-            </DashboardLayout>
+            <DashboardRoute>
+              <DashboardLayout>
+                <FormAnimals />
+              </DashboardLayout>
+            </DashboardRoute>
           }
         />
         <Route 
           path='/dashboard/animals-form/:idEdit'
           element={
-            <DashboardLayout>
-              <FormAnimals />
-            </DashboardLayout>
+            <DashboardRoute>
+              <DashboardLayout>
+                <FormAnimals />
+              </DashboardLayout>
+            </DashboardRoute>
           }
         />
         <Route 

@@ -27,6 +27,15 @@ function Navigation() {
                 <Nav.Item>
                 <Link to="/animals" className="nav-link text-white">Animals</Link>
                 </Nav.Item>
+                {
+                    !sessionStorage.getItem('accessToken') ?
+                    <Nav.Item>
+                        <Link to="/login" className="nav-link text-success bg-light rounded-3">Login</Link>
+                    </Nav.Item> : 
+                    <Nav.Item>
+                        <Link to="/dashboard" className="nav-link text-white">Dashboard</Link>
+                    </Nav.Item>
+                }
             </Nav>
             </Navbar.Collapse>
         </Container>
