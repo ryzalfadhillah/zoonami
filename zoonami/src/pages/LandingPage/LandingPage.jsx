@@ -1,5 +1,5 @@
 // import React from 'react'
-import About from "../../components/AboutUs/aboutUs"
+import About from "../../components/AboutUs/AboutUs"
 import HeroImage from "../../components/HeroSection/Hero"
 import Navigation from "../../components/Navbar/Navbar"
 import Footer from '../../components/Footer/Footer'

@@ -1,6 +1,6 @@
 import { Container, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import About from '../../components/AboutUs/aboutUs';
+import About from '../../components/AboutUs/AboutUs';
 
 const Welcome = () => {
     return (
